@@ -6,17 +6,17 @@ A multi-game embedded games console built on the **STM32L476 Nucleo board** for 
 
 ## Games
 
-### 🎮 Game 1 — Block Defense
+### Game 1 — Block Defense
 > by Zekai Deng
 
 A fast-paced vertical defence game. Control your character to deflect or destroy incoming blocks before they reach the bottom.
 
-### 🎣 Game 2 — mini Stardew Fishing Simulator
+### Game 2 — mini Stardew Fishing Simulator
 > by Liangyu Mei
 
 A fishing mini-game inspired by Stardew Valley. Cast your line, react when the fish bites, then keep the fish icon inside a moving green bar to reel it in. Features five fish species across three rarity tiers (Common, Rare, Legendary), a persistent fish collection compendium, score tracking, and audio/LED feedback.
 
-### 🏃 Game 3 — Temple Run 3D Edition
+### Game 3 — Temple Run 3D Edition
 > by Junyi Jiang
 
 A real-time 3D perspective runner rendered entirely on the STM32. Dodge incoming obstacles as the environment scrolls toward you.
