@@ -1,87 +1,49 @@
-# Unit 4.1 Menu Template
+# XJEL2645 STM32 Games Console
 
-A collaborative game development framework for your Unit 4 Group Project, demonstrating how multiple students can implement their own games within a shared menu system and game loop architecture.
+A multi-game embedded games console built on the **STM32L476 Nucleo board** for the XJEL2645 Embedded Systems module. Three individual games are combined into a single project via a shared menu system, all running on a 240×240 colour LCD.
 
-## Overview
+---
 
-This project provides:
-- **Centralized Menu System**: Navigate between 3 independent games
-- **Simple Game Loop**: INPUT → UPDATE → RENDER pattern
-- **Shared Resources**: LCD display, joystick input, buzzer, PWM LED
-- **Student Friendly**: Each student works in their own game folder
-- **No Merge Conflicts**: Shared code stays in `shared/`, each game in its own folder
+## Games
+
+### 🎮 Game 1 — Block Defense
+> by Zekai Deng
+
+A fast-paced vertical defence game. Control your character to deflect or destroy incoming blocks before they reach the bottom.
+
+### 🎣 Game 2 — mini Stardew Fishing Simulator
+> by Liangyu Mei
+
+A fishing mini-game inspired by Stardew Valley. Cast your line, react when the fish bites, then keep the fish icon inside a moving green bar to reel it in. Features five fish species across three rarity tiers (Common, Rare, Legendary), a persistent fish collection compendium, score tracking, and audio/LED feedback.
+
+### 🏃 Game 3 — Temple Run 3D Edition
+> by Junyi Jiang
+
+A real-time 3D perspective runner rendered entirely on the STM32. Dodge incoming obstacles as the environment scrolls toward you.
+
+---
+
+## Hardware
+
+| Component | Details |
+|-----------|---------|
+| MCU | STM32L476RG (Nucleo-L476RG) |
+| Display | ST7789V2 240×240 IPS LCD, SPI + DMA |
+| Input | Analogue joystick (ADC), push button (EXTI) |
+| Audio | PWM buzzer (TIM2) |
+| LED feedback | PWM LED (TIM4) |
+| RNG | Hardware random number generator |
+
+---
 
 ## Project Structure
 
-```
-MenuTest/
-├── Core/              # STM32 auto-generated files
-├── Drivers/           # STM32 HAL drivers
-├── shared/            # Shared menu system & input handling
-│   ├── Menu.h/c
-│   └── InputHandler.h/c
-├── game_1/            # Student 1's game
-│   └── Game_1.c
-├── game_2/            # Student 2's game
-│   └── Game_2.c
-├── game_3/            # Student 3's game
-│   └── Game_3.c
-├── Joystick/          # Hardware drivers
-├── PWM/
-├── Buzzer/
-└── CMakeLists.txt
-```
-
-## Quick Start
-
-See [README_STUDENTS.md](README_STUDENTS.md) for detailed student guide.
-
-## Architecture
-
-### Main Game Loop (main.c)
-
-```c
-while(1) {
-    Input_Read();              // Read button and joystick
-    
-    switch(current_state) {    // UPDATE
-        case MENU: Menu_Update(); break;
-        case GAME_1: Game1_Update(); break;
-        case GAME_2: Game2_Update(); break;
-        case GAME_3: Game3_Update(); break;
-    }
-    
-    switch(current_state) {    // RENDER
-        case MENU: Menu_Render(); break;
-        case GAME_1: Game1_Render(); break;
-        case GAME_2: Game2_Render(); break;
-        case GAME_3: Game3_Render(); break;
-    }
-}
-```
-
-### Each Game Implements Three Functions
-
-```c
-void GameX_Init(void);      // Called once when game is selected from menu
-void GameX_Update(void);    // Called every frame (~30 FPS)
-void GameX_Render(void);    // Called every frame (after Update)
-```
-
-## Controls
-
-- **Joystick UP/DOWN**: Navigate menu
-- **BT2 Button**: Available for custom game use
-- **BT3 Button**: Select menu option or custom game use
-
-## Hardware Features
-
-- **STM32L476 Microcontroller**
-- **ST7789V2 LCD Display** (240×320)
-- **Joystick Input** with 8-directional output
-- **PWM LED** for visual effects
-- **Buzzer** for sound effects
-- **Timers**: TIM6 (100Hz) and TIM7 (1Hz) available for game timing
-
-See driver folders (Joystick/, PWM/, Buzzer/) for API documentation.
-See [TIMER_USAGE_GUIDE.md](TIMER_USAGE_GUIDE.md) for timer examples.
+    ├── Core/                        # STM32 HAL init, main loop, GPIO, ADC, timers
+    ├── Fish/                        # Fish species definitions and random generation
+    ├── FishingEngine/               # Game FSM, physics, and rendering (Game 2)
+    ├── Joystick/                    # Analogue joystick driver with circle mapping
+    ├── Buzzer/                      # Non-blocking PWM buzzer driver
+    ├── PWM/                         # PWM utility for LED feedback
+    ├── ST7789V2_Driver_STM32L4/     # LCD driver and drawing API
+    ├── Drivers/                     # STM32 HAL drivers
+    └── CMakeLists.txt
